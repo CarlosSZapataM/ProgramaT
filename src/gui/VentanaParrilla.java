@@ -319,11 +319,11 @@ public class VentanaParrilla extends javax.swing.JFrame {
         
         boolean rta = miParrilla.editarParrilla(parrillaSeleccionado);
         if(rta){
-            JOptionPane.showMessageDialog(this, "Se modifico el canal","Atencion",JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Se modifico el programa","Atencion",JOptionPane.INFORMATION_MESSAGE);
             cargarDatos();
             limpiar();
         }else{
-            JOptionPane.showMessageDialog(this, "No se modifico el canal, intente de nuevo","Atencion",JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "No se modifico el programa, intente de nuevo","Atencion",JOptionPane.ERROR_MESSAGE);
         }
     }
     
