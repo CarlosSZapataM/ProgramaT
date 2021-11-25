@@ -92,19 +92,19 @@ public class VentanaParrilla extends javax.swing.JFrame {
 
         txtNombre.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         getContentPane().add(txtNombre);
-        txtNombre.setBounds(210, 150, 400, 30);
+        txtNombre.setBounds(200, 150, 400, 30);
 
         txtHoraFinal.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         getContentPane().add(txtHoraFinal);
-        txtHoraFinal.setBounds(210, 270, 400, 30);
+        txtHoraFinal.setBounds(200, 270, 400, 30);
 
         txtFecha.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         getContentPane().add(txtFecha);
-        txtFecha.setBounds(210, 190, 400, 30);
+        txtFecha.setBounds(200, 190, 400, 30);
 
         txtHoraInicio.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         getContentPane().add(txtHoraInicio);
-        txtHoraInicio.setBounds(210, 230, 400, 30);
+        txtHoraInicio.setBounds(200, 230, 400, 30);
 
         btnGuardar.setFont(new java.awt.Font("Dialog", 3, 14)); // NOI18N
         btnGuardar.setText("Guardar");
@@ -114,7 +114,7 @@ public class VentanaParrilla extends javax.swing.JFrame {
             }
         });
         getContentPane().add(btnGuardar);
-        btnGuardar.setBounds(630, 160, 210, 29);
+        btnGuardar.setBounds(620, 190, 210, 27);
 
         btnEditar.setFont(new java.awt.Font("Dialog", 3, 14)); // NOI18N
         btnEditar.setText("Editar");
@@ -124,7 +124,7 @@ public class VentanaParrilla extends javax.swing.JFrame {
             }
         });
         getContentPane().add(btnEditar);
-        btnEditar.setBounds(40, 540, 210, 29);
+        btnEditar.setBounds(30, 550, 240, 27);
 
         btnBorrar.setFont(new java.awt.Font("Dialog", 3, 14)); // NOI18N
         btnBorrar.setText("Borrar");
@@ -134,7 +134,7 @@ public class VentanaParrilla extends javax.swing.JFrame {
             }
         });
         getContentPane().add(btnBorrar);
-        btnBorrar.setBounds(280, 540, 210, 29);
+        btnBorrar.setBounds(310, 550, 240, 27);
 
         btnLimpiar.setFont(new java.awt.Font("Dialog", 3, 14)); // NOI18N
         btnLimpiar.setText("Limpiar");
@@ -144,7 +144,7 @@ public class VentanaParrilla extends javax.swing.JFrame {
             }
         });
         getContentPane().add(btnLimpiar);
-        btnLimpiar.setBounds(630, 200, 210, 29);
+        btnLimpiar.setBounds(620, 230, 210, 27);
 
         btnSalir.setFont(new java.awt.Font("Dialog", 3, 14)); // NOI18N
         btnSalir.setText("Volver");
@@ -154,7 +154,7 @@ public class VentanaParrilla extends javax.swing.JFrame {
             }
         });
         getContentPane().add(btnSalir);
-        btnSalir.setBounds(620, 600, 210, 29);
+        btnSalir.setBounds(590, 550, 240, 27);
 
         tablaProductos.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -164,26 +164,26 @@ public class VentanaParrilla extends javax.swing.JFrame {
         jScrollPane1.setViewportView(tablaProductos);
 
         getContentPane().add(jScrollPane1);
-        jScrollPane1.setBounds(30, 320, 820, 210);
+        jScrollPane1.setBounds(30, 320, 800, 210);
 
         jLabel6.setText("________________________________________________________________________________________________________________________________________________________________");
         getContentPane().add(jLabel6);
-        jLabel6.setBounds(-30, 20, 920, 16);
+        jLabel6.setBounds(-30, 20, 920, 14);
 
         jLabel7.setText("________________________________________________________________________________________________________________________________________________________________");
         getContentPane().add(jLabel7);
-        jLabel7.setBounds(-20, 80, 920, 16);
+        jLabel7.setBounds(-20, 80, 920, 14);
 
         jLabel8.setFont(new java.awt.Font("Dialog", 3, 14)); // NOI18N
         getContentPane().add(jLabel8);
-        jLabel8.setBounds(210, 110, 390, 30);
+        jLabel8.setBounds(200, 110, 390, 30);
 
         jLabel9.setFont(new java.awt.Font("Dialog", 3, 14)); // NOI18N
         jLabel9.setText("Nombre del canal:");
         getContentPane().add(jLabel9);
         jLabel9.setBounds(30, 110, 190, 30);
 
-        setSize(new java.awt.Dimension(876, 689));
+        setSize(new java.awt.Dimension(876, 652));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
