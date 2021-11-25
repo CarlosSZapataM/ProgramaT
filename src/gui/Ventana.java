@@ -11,12 +11,12 @@ import logica.Agenda;
  */
 public class Ventana extends javax.swing.JFrame {
 
-    private Agenda miAgenda;
-    private Canal productoseleccionado;
+    private Agenda miCanal;
+    private Canal canalSeleccionado;
 
     public Ventana() {
         
-        miAgenda = new Agenda();
+        miCanal = new Agenda();
 
         initComponents();
         cargarDatos();
@@ -162,7 +162,7 @@ public class Ventana extends javax.swing.JFrame {
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
         // TODO add your handling code here:
-        this.adicionarProducto();
+        this.adicionarCanal();
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
@@ -171,7 +171,7 @@ public class Ventana extends javax.swing.JFrame {
 
     private void tablaProductosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaProductosMouseClicked
         // TODO add your handling code here:
-        this.seleccionarProducto();
+        this.seleccionarCanal();
     }//GEN-LAST:event_tablaProductosMouseClicked
 
     private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
@@ -181,12 +181,12 @@ public class Ventana extends javax.swing.JFrame {
 
     private void btnBorrar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBorrar1ActionPerformed
         // TODO add your handling code here:
-        this.borrarProducto();
+        this.borrarCanal();
     }//GEN-LAST:event_btnBorrar1ActionPerformed
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
         // TODO add your handling code here:
-        this.editarComputador();
+        this.editarCanal();
     }//GEN-LAST:event_btnEditarActionPerformed
 
     /**
@@ -207,58 +207,10 @@ public class Ventana extends javax.swing.JFrame {
             }
         });
     }
-
-    private void adicionarProducto() {
-        if (txtNombre.getText().isEmpty() || txtNumero.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Por favor! No dejar campos vacios");
-        } else {
-            String nombre = txtNombre.getText();
-            String cantidad = txtNumero.getText();
-
-            Canal p = new Canal();
-            p.setNombreCanal(nombre);
-            p.setNumeroCanal(cantidad);
-
-            boolean r = miAgenda.adicionarProducto(p);
-
-            if (r) {
-                JOptionPane.showMessageDialog(this, "Se almaceno el canal", "Atencion", JOptionPane.INFORMATION_MESSAGE);
-                this.productoseleccionado = null;
-                cargarDatos();
-                limpiar();
-
-            } else {
-                JOptionPane.showMessageDialog(this, "No se almaceno el canal", "Atencion", JOptionPane.ERROR_MESSAGE);
-            }
-        }
-    }
     
-    private void borrarProducto() {
-
-        if (productoseleccionado == null) {
-            return;
-        }
-
-        boolean rta = miAgenda.borrarProducto(productoseleccionado);
-        if (rta) {
-            JOptionPane.showMessageDialog(this, "Se Borro el canal", "Atencion", JOptionPane.INFORMATION_MESSAGE);
-            this.productoseleccionado = null;
-            cargarDatos();
-            limpiar();
-        } else {
-            JOptionPane.showMessageDialog(this, "No se Borro el canal", "Atencion", JOptionPane.ERROR_MESSAGE);
-        }
-    }
-
-    public void vnInicio(){
-        VentanaInicio c = new VentanaInicio();
-        c.setVisible(true);
-        this.setVisible(false);
-    }
-
     private void cargarDatos() {
 
-        ArrayList<Canal> lista = miAgenda.getProductos();
+        ArrayList<Canal> lista = miCanal.getCanal();
         DefaultTableModel modelo = new DefaultTableModel();
         modelo.addColumn("Id");
         modelo.addColumn("Nombre");
@@ -278,42 +230,62 @@ public class Ventana extends javax.swing.JFrame {
         interactionButtonParrilla();
     }
 
-    private void limpiar() {
-        btnGuardar.setEnabled(true);
-        btnEditar.setEnabled(true);
-        this.txtNombre.setText("");
-        this.txtNumero.setText("");
-    }
+    private void adicionarCanal() {
+        if (txtNombre.getText().isEmpty() || txtNumero.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Por favor! No dejar campos vacios");
+        } else {
+            String nombre = txtNombre.getText();
+            String numero = txtNumero.getText();
 
-    private void seleccionarProducto() {
-        int fila = tablaProductos.getSelectedRow();
-        Long identificacion = (Long) tablaProductos.getValueAt(fila, 0);
-        productoseleccionado = this.miAgenda.buscarProductos(identificacion);
-        this.txtNombre.setText(productoseleccionado.getNombreCanal());
-        this.txtNumero.setText(productoseleccionado.getNumeroCanal());
-        interactionButtonParrilla();
+            Canal p = new Canal();
+            p.setNombreCanal(nombre);
+            p.setNumeroCanal(numero);
+
+            boolean r = miCanal.adicionarCanal(p);
+
+            if (r) {
+                JOptionPane.showMessageDialog(this, "Se almaceno el canal", "Atencion", JOptionPane.INFORMATION_MESSAGE);
+                this.canalSeleccionado = null;
+                cargarDatos();
+                limpiar();
+
+            } else {
+                JOptionPane.showMessageDialog(this, "No se almaceno el canal, intentelo de nuevo", "Atencion", JOptionPane.ERROR_MESSAGE);
+            }
+        }
     }
     
-    public void vnParrilla(){
-        VentanaParrilla p = new VentanaParrilla(this.productoseleccionado);
-        p.setVisible(true);
-        this.setVisible(false);
-    }
+    private void borrarCanal() {
 
-    private void editarComputador(){
-        if(productoseleccionado == null)
+        if (canalSeleccionado == null) {
+            return;
+        }
+
+        boolean rta = miCanal.borrarCanal(canalSeleccionado);
+        if (rta) {
+            JOptionPane.showMessageDialog(this, "Se Borro el canal", "Atencion", JOptionPane.INFORMATION_MESSAGE);
+            this.canalSeleccionado = null;
+            cargarDatos();
+            limpiar();
+        } else {
+            JOptionPane.showMessageDialog(this, "No se Borro el canal, intentelo de nuevo", "Atencion", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+  
+    private void editarCanal(){
+        if(canalSeleccionado == null)
             return;
     
         String marca = txtNombre.getText();
         String modelo = txtNumero.getText();
         
-        productoseleccionado.setNombreCanal(marca);
-        productoseleccionado.setNumeroCanal(modelo);
+        canalSeleccionado.setNombreCanal(marca);
+        canalSeleccionado.setNumeroCanal(modelo);
         
-        boolean rta = miAgenda.editarProducto(productoseleccionado);
+        boolean rta = miCanal.editarProducto(canalSeleccionado);
         if(rta){
             JOptionPane.showMessageDialog(this, "Se modifico el canal","Atencion",JOptionPane.INFORMATION_MESSAGE);
-            this.productoseleccionado = null;
+            this.canalSeleccionado = null;
             cargarDatos();
             limpiar();
         }else{
@@ -321,13 +293,43 @@ public class Ventana extends javax.swing.JFrame {
         }
     }
     
+    private void seleccionarCanal() {
+        int fila = tablaProductos.getSelectedRow();
+        Long identificacion = (Long) tablaProductos.getValueAt(fila, 0);
+        canalSeleccionado = this.miCanal.buscarCanal(identificacion);
+        this.txtNombre.setText(canalSeleccionado.getNombreCanal());
+        this.txtNumero.setText(canalSeleccionado.getNumeroCanal());
+        interactionButtonParrilla();
+    }
+    
+    private void limpiar() {
+        btnGuardar.setEnabled(true);
+        btnEditar.setEnabled(true);
+        this.txtNombre.setText("");
+        this.txtNumero.setText("");
+    }
+    
     public void interactionButtonParrilla(){
-        if (this.productoseleccionado == null) {
+        if (this.canalSeleccionado == null) {
             this.btParrilla.setEnabled(false);
         } else {
             this.btParrilla.setEnabled(true);
         }
     }
+    
+    public void vnParrilla(){
+        VentanaParrilla p = new VentanaParrilla(this.canalSeleccionado);
+        p.setVisible(true);
+        this.setVisible(false);
+    }
+    
+    public void vnInicio(){
+        VentanaInicio c = new VentanaInicio();
+        c.setVisible(true);
+        this.setVisible(false);
+    }
+
+    
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btParrilla;

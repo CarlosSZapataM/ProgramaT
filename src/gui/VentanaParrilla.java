@@ -12,13 +12,13 @@ import logica.AgendaParrilla;
  */
 public class VentanaParrilla extends javax.swing.JFrame {
 
-    private AgendaParrilla miAgenda;
-    private Parrilla productoseleccionado;
+    private AgendaParrilla miParrilla;
+    private Parrilla parrillaSeleccionado;
     private Canal canal;
 
     public VentanaParrilla() {
         
-        miAgenda = new AgendaParrilla();
+        miParrilla = new AgendaParrilla();
 
         initComponents();
         cargarDatos();
@@ -27,7 +27,7 @@ public class VentanaParrilla extends javax.swing.JFrame {
     public VentanaParrilla(Canal canal) {
         this.canal = canal;
         initComponents();
-        miAgenda = new AgendaParrilla();
+        miParrilla = new AgendaParrilla();
         this.jLabel8.setText(canal.getNombreCanal());
         cargarDatos();
     }
@@ -188,12 +188,12 @@ public class VentanaParrilla extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnBorrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBorrarActionPerformed
-        this.borrarProducto();
+        this.borrarParrilla();
     }//GEN-LAST:event_btnBorrarActionPerformed
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
         // TODO add your handling code here:
-        this.adicionarProducto();
+        this.adicionarParrilla();
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
@@ -202,7 +202,7 @@ public class VentanaParrilla extends javax.swing.JFrame {
 
     private void tablaProductosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaProductosMouseClicked
         // TODO add your handling code here:
-        this.seleccionarProducto();
+        this.seleccionarParrilla();
     }//GEN-LAST:event_tablaProductosMouseClicked
 
     private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
@@ -212,7 +212,7 @@ public class VentanaParrilla extends javax.swing.JFrame {
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
         // TODO add your handling code here:
-        this.editarComputador();
+        this.editarParrilla();
     }//GEN-LAST:event_btnEditarActionPerformed
 
     /**
@@ -233,58 +233,7 @@ public class VentanaParrilla extends javax.swing.JFrame {
             }
         });
     }
-
-    private void adicionarProducto() {
-        if (txtNombre.getText().isEmpty() || txtFecha.getText().isEmpty() || txtHoraInicio.getText().isEmpty() || txtHoraFinal.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Por favor! No dejar campos vacios");
-        } else {
-            String nombre = txtNombre.getText();
-            String cantidad = txtFecha.getText();
-            String marca = txtHoraInicio.getText();
-            String tipoProducto = txtHoraFinal.getText();
-
-            Parrilla p = new Parrilla();
-            p.setNombrePrograma(nombre);
-            p.setFechaTransmision(cantidad);
-            p.setHoraInicio(marca);
-            p.setHoraFinal(tipoProducto);
-            p.setIdCanal(this.canal.getId());
-
-            boolean r = miAgenda.adicionarProducto(p);
-
-            if (r) {
-                JOptionPane.showMessageDialog(this, "Se almaceno el programa", "Atencion", JOptionPane.INFORMATION_MESSAGE);
-                cargarDatos();
-                limpiar();
-
-            } else {
-                JOptionPane.showMessageDialog(this, "No se almaceno el programa", "Atencion", JOptionPane.ERROR_MESSAGE);
-            }
-        }
-    }
     
-    private void borrarProducto() {
-
-        if (productoseleccionado == null) {
-            return;
-        }
-
-        boolean rta = miAgenda.borrarProducto(productoseleccionado);
-        if (rta) {
-            JOptionPane.showMessageDialog(this, "Se Borro el programa", "Atencion", JOptionPane.INFORMATION_MESSAGE);
-            cargarDatos();
-            limpiar();
-        } else {
-            JOptionPane.showMessageDialog(this, "No se Borro el programa", "Atencion", JOptionPane.ERROR_MESSAGE);
-        }
-    }
-
-    public void vnCanales(){
-        Ventana c = new Ventana();
-        c.setVisible(true);
-        this.setVisible(false);
-    }
-
     private void cargarDatos() {
         DefaultTableModel modelo = new DefaultTableModel();
         modelo.addColumn("Id");
@@ -293,7 +242,7 @@ public class VentanaParrilla extends javax.swing.JFrame {
         modelo.addColumn("Hora inicio");
         modelo.addColumn("Hora fin");
 
-        for (Parrilla producto : miAgenda.getProductos()) {
+        for (Parrilla producto : miParrilla.getParrilla()) {
             if (canal.getId().equals(producto.getIdCanal())) {
                 Object[] datos = {
                     producto.getId(),
@@ -309,6 +258,85 @@ public class VentanaParrilla extends javax.swing.JFrame {
 
     }
 
+    private void adicionarParrilla() {
+        if (txtNombre.getText().isEmpty() || txtFecha.getText().isEmpty() || txtHoraInicio.getText().isEmpty() || txtHoraFinal.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Por favor! No dejar campos vacios");
+        } else {
+            String nombre = txtNombre.getText();
+            String fecha = txtFecha.getText();
+            String inicio = txtHoraInicio.getText();
+            String fin = txtHoraFinal.getText();
+
+            Parrilla p = new Parrilla();
+            p.setNombrePrograma(nombre);
+            p.setFechaTransmision(fecha);
+            p.setHoraInicio(inicio);
+            p.setHoraFinal(fin);
+            p.setIdCanal(this.canal.getId());
+
+            boolean r = miParrilla.adicionarParrilla(p);
+
+            if (r) {
+                JOptionPane.showMessageDialog(this, "Se almaceno el programa", "Atencion", JOptionPane.INFORMATION_MESSAGE);
+                cargarDatos();
+                limpiar();
+
+            } else {
+                JOptionPane.showMessageDialog(this, "No se almaceno el programa, intentelo de nuevo", "Atencion", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }
+    
+    private void borrarParrilla() {
+
+        if (parrillaSeleccionado == null) {
+            return;
+        }
+
+        boolean rta = miParrilla.borrarParrilla(parrillaSeleccionado);
+        if (rta) {
+            JOptionPane.showMessageDialog(this, "Se borro el programa", "Atencion", JOptionPane.INFORMATION_MESSAGE);
+            cargarDatos();
+            limpiar();
+        } else {
+            JOptionPane.showMessageDialog(this, "No se borro el programa, intentelo de nuevo", "Atencion", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    private void editarParrilla(){
+        if(parrillaSeleccionado == null)
+            return;
+    
+        String nombre = txtNombre.getText();
+        String fecha = txtFecha.getText();
+        String horaInicio = txtHoraInicio.getText();
+        String horaFinal = txtHoraFinal.getText();
+        
+        parrillaSeleccionado.setNombrePrograma(nombre);
+        parrillaSeleccionado.setFechaTransmision(fecha);
+        parrillaSeleccionado.setHoraInicio(horaInicio);
+        parrillaSeleccionado.setHoraFinal(horaFinal);
+        
+        boolean rta = miParrilla.editarParrilla(parrillaSeleccionado);
+        if(rta){
+            JOptionPane.showMessageDialog(this, "Se modifico el canal","Atencion",JOptionPane.INFORMATION_MESSAGE);
+            cargarDatos();
+            limpiar();
+        }else{
+            JOptionPane.showMessageDialog(this, "No se modifico el canal, intente de nuevo","Atencion",JOptionPane.ERROR_MESSAGE);
+        }
+    }
+    
+    private void seleccionarParrilla() {
+        int fila = tablaProductos.getSelectedRow();
+        Long identificacion = (Long) tablaProductos.getValueAt(fila, 0);
+        parrillaSeleccionado = this.miParrilla.buscarParrilla(identificacion);
+        this.txtNombre.setText(parrillaSeleccionado.getNombrePrograma());
+        this.txtFecha.setText(parrillaSeleccionado.getFechaTransmision());
+        this.txtHoraInicio.setText(parrillaSeleccionado.getHoraInicio());
+        this.txtHoraFinal.setText(parrillaSeleccionado.getHoraFinal());
+    }
+    
     private void limpiar() {
         btnGuardar.setEnabled(true);
         btnEditar.setEnabled(true);
@@ -319,39 +347,11 @@ public class VentanaParrilla extends javax.swing.JFrame {
         this.txtHoraFinal.setText("");
 
     }
-
-    private void seleccionarProducto() {
-        int fila = tablaProductos.getSelectedRow();
-        Long identificacion = (Long) tablaProductos.getValueAt(fila, 0);
-        productoseleccionado = this.miAgenda.buscarProductos(identificacion);
-        this.txtNombre.setText(productoseleccionado.getNombrePrograma());
-        this.txtFecha.setText(productoseleccionado.getFechaTransmision());
-        this.txtHoraInicio.setText(productoseleccionado.getHoraInicio());
-        this.txtHoraFinal.setText(productoseleccionado.getHoraFinal());
-    }
-
-    private void editarComputador(){
-        if(productoseleccionado == null)
-            return;
     
-        String nombre = txtNombre.getText();
-        String fecha = txtFecha.getText();
-        String horaInicio = txtHoraInicio.getText();
-        String horaFinal = txtHoraFinal.getText();
-        
-        productoseleccionado.setNombrePrograma(nombre);
-        productoseleccionado.setFechaTransmision(fecha);
-        productoseleccionado.setHoraInicio(horaInicio);
-        productoseleccionado.setHoraFinal(horaFinal);
-        
-        boolean rta = miAgenda.editarProducto(productoseleccionado);
-        if(rta){
-            JOptionPane.showMessageDialog(this, "Se modifico el canal","Atencion",JOptionPane.INFORMATION_MESSAGE);
-            cargarDatos();
-            limpiar();
-        }else{
-            JOptionPane.showMessageDialog(this, "No se modifico el canal, intente de nuevo","Atencion",JOptionPane.ERROR_MESSAGE);
-        }
+    public void vnCanales(){
+        Ventana c = new Ventana();
+        c.setVisible(true);
+        this.setVisible(false);
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables

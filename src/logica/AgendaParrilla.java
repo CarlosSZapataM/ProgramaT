@@ -10,78 +10,78 @@ import util.GestorPersistenciaParrilla;
  */
 public class AgendaParrilla  implements Serializable{
     
-    public ArrayList<Parrilla> productos;
+    public ArrayList<Parrilla> parrillas;
     
     public AgendaParrilla(){
-        this.productos = this.buscarProductos();
-        if (this.productos == null) {
-            this.productos = new ArrayList<>();
+        this.parrillas = this.buscarParrilla();
+        if (this.parrillas == null) {
+            this.parrillas = new ArrayList<>();
         }
     }
     
     public AgendaParrilla(ArrayList<Parrilla> parrillas){
-        this.productos = parrillas;
-        if (this.productos == null) {
-            this.productos = new ArrayList<>();
+        this.parrillas = parrillas;
+        if (this.parrillas == null) {
+            this.parrillas = new ArrayList<>();
         }
     }
 
-    public ArrayList<Parrilla> getProductos() {
-        return productos;
+    public ArrayList<Parrilla> getParrilla() {
+        return parrillas;
     }
 
-    public void setProductos(ArrayList<Parrilla> productos) {
-        this.productos = productos;
+    public void setParrilla(ArrayList<Parrilla> parrillas) {
+        this.parrillas = parrillas;
     }
     
-    public boolean adicionarProducto(Parrilla producto) {
-          if (producto == null) {
+    public boolean adicionarParrilla(Parrilla parrilla) {
+          if (parrilla == null) {
             return false;
         }
-        producto.setId( this.consecutivo());
-        if (this.productos.add(producto)) {
+        parrilla.setId( this.consecutivo());
+        if (this.parrillas.add(parrilla)) {
             return this.actualizarPersistencia();
         }
         return false;
     }
 
-    public boolean borrarProducto(Parrilla producto) {
-        if (producto == null) {
+    public boolean borrarParrilla(Parrilla parrilla) {
+        if (parrilla == null) {
             return false;
         }
-        if (this.productos.remove(producto)) {
+        if (this.parrillas.remove(parrilla)) {
             return this.actualizarPersistencia();
         }
         return false;
     }
 
-    public boolean editarProducto(Parrilla producto) {
-        if (producto == null) {
+    public boolean editarParrilla(Parrilla parrilla) {
+        if (parrilla == null) {
             return false;
         }
-        for (Parrilla elContacto : productos) {
-            if (elContacto.getId()== producto.getId()) {
-                elContacto.setNombrePrograma(producto.getNombrePrograma());
-                elContacto.setFechaTransmision(producto.getFechaTransmision());
-                elContacto.setHoraInicio(producto.getHoraInicio());
-                elContacto.setHoraFinal(producto.getHoraFinal());
+        for (Parrilla elContacto : parrillas) {
+            if (elContacto.getId()== parrilla.getId()) {
+                elContacto.setNombrePrograma(parrilla.getNombrePrograma());
+                elContacto.setFechaTransmision(parrilla.getFechaTransmision());
+                elContacto.setHoraInicio(parrilla.getHoraInicio());
+                elContacto.setHoraFinal(parrilla.getHoraFinal());
                 return this.actualizarPersistencia();
             }
         }
         return false;
     }
 
-    public ArrayList<Parrilla> buscarProductos() {
+    public ArrayList<Parrilla> buscarParrilla() {
         GestorPersistenciaParrilla gestor = new GestorPersistenciaParrilla();
         return gestor.abrirArchivo();
     }
 
 
-    public Parrilla buscarProductos(Long identif) {
+    public Parrilla buscarParrilla(Long identif) {
         if (identif == null) {
             return null;
         }
-        for (Parrilla elProducto : productos) {
+        for (Parrilla elProducto : parrillas) {
             if (elProducto.getId()== identif) {
                 return elProducto;
             }
@@ -91,13 +91,13 @@ public class AgendaParrilla  implements Serializable{
 
     private boolean actualizarPersistencia() {
         GestorPersistenciaParrilla gestor = new GestorPersistenciaParrilla();
-        return gestor.guardarArchivo(productos);
+        return gestor.guardarArchivo(parrillas);
     }
     
     private Long consecutivo(){
-       if(this.productos.isEmpty()){
+       if(this.parrillas.isEmpty()){
            return 1L;
        }
-        return this.productos.get(this.productos.size()-1).getId() +1;
+        return this.parrillas.get(this.parrillas.size()-1).getId() +1;
     }
 }

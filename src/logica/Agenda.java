@@ -11,70 +11,70 @@ import util.GestorPersistencia;
  */
 public class Agenda  implements Serializable{
     
-    private ArrayList<Canal> productos;
+    private ArrayList<Canal> canales;
     
     public Agenda(){
-        this.buscarProductos();
+        this.buscarCanal();
         this.listaCanalParrilla();
-        if (this.productos == null) {
-            this.productos = new ArrayList<>();
+        if (this.canales == null) {
+            this.canales = new ArrayList<>();
         }
     }
 
-    public ArrayList<Canal> getProductos() {
-        return productos;
+    public ArrayList<Canal> getCanal() {
+        return canales;
     }
 
-    public void setProductos(ArrayList<Canal> productos) {
-        this.productos = productos;
+    public void setCanal(ArrayList<Canal> canales) {
+        this.canales = canales;
     }
     
-    public boolean adicionarProducto(Canal producto) {
-          if (producto == null) {
+    public boolean adicionarCanal(Canal canal) {
+          if (canal == null) {
             return false;
         }
-        producto.setId( this.consecutivo());
-        if (this.productos.add(producto)) {
+        canal.setId( this.consecutivo());
+        if (this.canales.add(canal)) {
             return this.actualizarPersistencia();
         }
         return false;
     }
 
-    public boolean borrarProducto(Canal producto) {
-        if (producto == null) {
+    public boolean borrarCanal(Canal canal) {
+        if (canal == null) {
             return false;
         }
-        if (this.productos.remove(producto)) {
+        if (this.canales.remove(canal)) {
             return this.actualizarPersistencia();
         }
         return false;
     }
 
-    public boolean editarProducto(Canal producto) {
-        if (producto == null) {
+    public boolean editarProducto(Canal canal) {
+        if (canal == null) {
             return false;
         }
-        for (Canal elContacto : productos) {
-            if (elContacto.getId()== producto.getId()) {
-                elContacto.setNombreCanal(producto.getNombreCanal());
-                elContacto.setNumeroCanal(producto.getNumeroCanal());
+        for (Canal elContacto : canales) {
+            if (elContacto.getId()== canal.getId()) {
+                elContacto.setNombreCanal(canal.getNombreCanal());
+                elContacto.setNumeroCanal(canal.getNumeroCanal());
                 return this.actualizarPersistencia();
             }
         }
         return false;
     }
 
-    public void buscarProductos() {
+    public void buscarCanal() {
         GestorPersistencia gestor = new GestorPersistencia();
-        this.productos = gestor.abrirArchivo();
+        this.canales = gestor.abrirArchivo();
     }
 
 
-    public Canal buscarProductos(Long identif) {
+    public Canal buscarCanal(Long identif) {
         if (identif == null) {
             return null;
         }
-        for (Canal elProducto : productos) {
+        for (Canal elProducto : canales) {
             if (elProducto.getId()== identif) {
                 return elProducto;
             }
@@ -84,27 +84,27 @@ public class Agenda  implements Serializable{
     
     private boolean actualizarPersistencia() {
         GestorPersistencia gestor = new GestorPersistencia();
-        return gestor.guardarArchivo(productos);
+        return gestor.guardarArchivo(canales);
     }
     
     private Long consecutivo(){
-       if(this.productos.isEmpty()){
+       if(this.canales.isEmpty()){
            return 1L;
        }
-        return this.productos.get(this.productos.size()-1).getId() +1;
+        return this.canales.get(this.canales.size()-1).getId() +1;
     }
     
     private void listaCanalParrilla(){
         
-        for (Canal elContacto : productos) {
+        for (Canal elCanal : canales) {
             ArrayList<Parrilla> parrillas = new ArrayList<Parrilla>();
             AgendaParrilla ag = new AgendaParrilla();
-            for(Parrilla laContacto : ag.buscarProductos()){
-                if (elContacto.getId().equals(laContacto.getIdCanal())) {
-                    parrillas.add(laContacto);
+            for(Parrilla laParrilla : ag.buscarParrilla()){
+                if (elCanal.getId().equals(laParrilla.getIdCanal())) {
+                    parrillas.add(laParrilla);
                 }
             }
-            elContacto.parrillas = parrillas;
+            elCanal .parrillas = parrillas;
         }
     }
 }
